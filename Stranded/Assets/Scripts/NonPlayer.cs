@@ -76,7 +76,7 @@ public class NonPlayer : MonoBehaviour {
 	// within the camera view to begin with
 	Vector3 initializeCoordinates()
 	{
-		Camera mainCamera = GameObject.Find ("MainCamera").camera;
+		Camera mainCamera = GameObject.Find ("Main Camera").camera;
 		Vector3 cameraCoordinates = mainCamera.gameObject.transform.position;
 		float cameraHeight = mainCamera.orthographicSize;
 		float cameraWidth = cameraHeight * mainCamera.aspect;

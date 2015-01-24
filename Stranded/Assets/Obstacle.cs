@@ -7,6 +7,8 @@ public class Obstacle : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		// This lets the player know that this obstacle exists for collision purposes
 		player = GameObject.Find("player");
 		Player playerComponent = player.GetComponent<Player> ();
 		playerComponent.obstacles.Add (this.gameObject);

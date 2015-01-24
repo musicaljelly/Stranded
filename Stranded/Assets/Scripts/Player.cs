@@ -58,12 +58,6 @@ public class Player : MonoBehaviour {
 				break;
 			}
 		}
-
-		// Update the character's Z to be the bottom edge of its bounding box
-		Vector3 newPos = transform.position;
-		newPos.z = collider2D.bounds.center.y - collider2D.bounds.extents.y;
-		transform.position = newPos;
-
 	}
 
     // FixedUpdate is called once per fixed framerate frame

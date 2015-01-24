@@ -5,9 +5,7 @@ using System.Collections.Generic;
 public class Player : MonoBehaviour {
 
     Vector2 motion = new Vector2(0, 0);
-
     float speed = 3f;
-
 	public List<GameObject> obstacles = new List<GameObject>();
 
 	GameObject background = null;

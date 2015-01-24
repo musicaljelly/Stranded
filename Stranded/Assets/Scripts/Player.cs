@@ -5,15 +5,17 @@ using System.Collections.Generic;
 public class Player : MonoBehaviour {
 
     Vector2 motion = new Vector2(0, 0);
-
     float speed = 3f;
-
 	public List<GameObject> obstacles = new List<GameObject>();
+
+	GameObject background = null;
+	GameObject camera = null;
 
 
 	// Use this for initialization
 	void Start () {
-	
+		background = GameObject.Find ("beach");
+		camera = GameObject.Find ("Main Camera");
 	}
 	
 	// Update is called once per frame
@@ -58,6 +60,25 @@ public class Player : MonoBehaviour {
 				break;
 			}
 		}
+
+		// Update the camera. This needs to be here to eliminate stutter.
+		Vector3 oldCamPos = camera.transform.position;
+		Vector3 newPos = transform.position;
+		newPos.z = camera.transform.position.z;
+		camera.transform.position = newPos;
+		
+		Bounds backgroundBounds = background.collider2D.bounds;
+		Bounds cameraBounds = camera.collider2D.bounds;
+		
+		if (cameraBounds.min.x < backgroundBounds.min.x || cameraBounds.max.x > backgroundBounds.max.x) {
+			newPos.x = oldCamPos.x;
+		}
+		
+		if (cameraBounds.min.y < backgroundBounds.min.y || cameraBounds.max.y > backgroundBounds.max.y) {
+			newPos.y = oldCamPos.y;
+		}
+		
+		camera.transform.position = newPos;
 	}
 
     // FixedUpdate is called once per fixed framerate frame

@@ -12,7 +12,7 @@ enum Task
 	RELAX,
 	SCAVENGE_FOOD,
 	SCAVENGE_WOOD,
-	CHOP_TREES,
+	SCAVENGE_PALMS,
 	START_FIRE,
 	STOKE_FIRE,
 	COOK_FOOD,
@@ -57,7 +57,7 @@ public class NonPlayer : MonoBehaviour {
 				break;
 			case (Task.SCAVENGE_WOOD):
 				break;
-			case (Task.CHOP_TREES):
+			case (Task.SCAVENGE_PALMS):
 				break;
 			case (Task.START_FIRE):
 				break;
@@ -73,15 +73,28 @@ public class NonPlayer : MonoBehaviour {
 
 
 	// Let's throw all the characters in a random place 
-	// within the camera screen to begin with
+	// within the camera view to begin with
 	Vector3 initializeCoordinates()
 	{
-		Vector3 cameraCoordinates = Camera.mainCamera.gameObject.transform.position;
-		float cameraHeight = 2f * Camera.mainCamera.orthographicSize;
-		float cameraWidth = cameraHeight * camera.aspect;
+		Camera mainCamera = GameObject.Find ("MainCamera").camera;
+		Vector3 cameraCoordinates = mainCamera.gameObject.transform.position;
+		float cameraHeight = mainCamera.orthographicSize;
+		float cameraWidth = cameraHeight * mainCamera.aspect;
 
-		float x_coor = Random.value * cameraWidth;
-		float y_coor = Random.value * cameraHeight;
+		float xrand = Random.value;
+		float yrand = Random.value;
+		int xmirror = 1;
+		int ymirror = 1;
+
+		if (xrand > 0.5) {
+			xmirror = -1;
+		}
+		if (yrand > 0.5) {
+			ymirror = -1;
+		}
+
+		float x_coor = (Random.value * cameraWidth * xmirror) + cameraCoordinates.x;
+		float y_coor = (Random.value * cameraHeight * ymirror) + cameraCoordinates.y;
 		Vector3 coordinates = new Vector3 (x_coor, y_coor, 0);
 
 		/* Implement this later if we have time; for the time
@@ -93,7 +106,6 @@ public class NonPlayer : MonoBehaviour {
 		//	coordinates = fixCoordinates(coordinates);
 		//	coordinatesGood = isInitializeCoordinatesSafe(coordinates);
 		// }
-
 		return coordinates;
 	}
 }

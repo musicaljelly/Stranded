@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
     Vector2 motion = new Vector2(0, 0);
 
     float speed = 3f;
+
+	public List<GameObject> obstacles = new List<GameObject>();
 
 
 	// Use this for initialization
@@ -42,7 +45,19 @@ public class Player : MonoBehaviour {
         }
 
         motion.Normalize();
+		Vector3 oldPos = transform.position;
         transform.Translate((motion * speed) * Time.deltaTime);
+
+		foreach (GameObject obstacle in obstacles) {
+			Bounds obstacleBounds = obstacle.collider2D.bounds;
+			obstacleBounds.center = new Vector3(obstacleBounds.center.x, obstacleBounds.center.y, 0);
+			Bounds playerBounds = collider2D.bounds;
+			playerBounds.center = new Vector3(playerBounds.center.x, playerBounds.center.y, 0);
+			if (playerBounds.Intersects (obstacleBounds)) {
+				transform.position = oldPos;
+				break;
+			}
+		}
 	}
 
     // FixedUpdate is called once per fixed framerate frame

@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using StrandedConstants;
 
 
-public class Pathfinder {
+public class Pathfinder : Component{
 
 	Vector3 NO_TASK_AVAILABLE = new Vector3(999, 999, 999);
+	float NO_TASK_AVAILABLE_FLOAT = 999;
 
 	public static List<GameObject> collisionObjects = new List<GameObject>();
 	public static bool collisionObjectsInitialized = false;
@@ -114,15 +115,37 @@ public class Pathfinder {
 		GameObject[] listOfCurrentTasks = GameObject.FindGameObjectsWithTag(mapTaskToTag(this.currentTask));
 		Vector3 coordinates = NO_TASK_AVAILABLE;
 
-		float smallestDistance = 10000f;
+		float distance = NO_TASK_AVAILABLE_FLOAT;
 		foreach (GameObject taskObject in listOfCurrentTasks)
 		{
-			float distance = this.find2DDistance(this.currentCoordinates, taskObject.transform.position);
-			if (distance < smallestDistance)
+			bool isEnabled = false;
+			switch (currentTask)
 			{
-				smallestDistance = distance;
-				coordinates = taskObject.transform.position;
+				case (Task.SCAVENGE_FOOD):
+					Food theFood = taskObject.GetComponent<Food>();
+					isEnabled = theFood.isEnabled;
+					break;
+				case (Task.SCAVENGE_PALMS):
+					isEnabled = true;
+					break;
+				case (Task.SCAVENGE_WOOD):
+					isEnabled = true;
+					break;
+				default:
+					isEnabled = true;
+					break;
 			}
+
+			if (isEnabled)
+			{
+				float newDistance = this.find2DDistance(this.currentCoordinates, taskObject.transform.position);
+				if (newDistance < distance)
+				{
+					distance = newDistance;
+					coordinates = taskObject.transform.position;
+				}
+			}
+
 		}
 
 		return coordinates;
@@ -233,7 +256,7 @@ public class Pathfinder {
 			case (Task.SCAVENGE_FOOD):
 				return "food";
 			case (Task.SCAVENGE_WOOD):
-				return "wood";
+				return "tree";
 			case (Task.SCAVENGE_PALMS):
 				return "palm";
 			case (Task.START_FIRE):

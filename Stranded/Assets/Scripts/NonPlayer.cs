@@ -73,34 +73,28 @@ public class NonPlayer : MonoBehaviour {
 		transform.Translate (pathfinder.findNextTranslation());
 		pathfinder.updateCoordinates(transform.position);
 	}
-	
-	// Let's throw all the characters in a random place 
-	// within the camera view to begin with
-	Vector3 initializeCoordinates()
-	{ 
-		Camera mainCamera = GameObject.Find ("Main Camera").camera;
-		Vector3 cameraCoordinates = mainCamera.gameObject.transform.position;
-		float cameraHeight = mainCamera.collider2D.bounds.extents.y / 2;
-		float cameraWidth = mainCamera.collider2D.bounds.extents.x / 2;
 
-		UnityEngine.Random.seed = (int)DateTime.Now.ToFileTime();
-		float xrand = UnityEngine.Random.value - 0.5f;
-		float yrand = UnityEngine.Random.value - 0.5f;
-
-		float xcoor = (xrand * cameraWidth) + cameraCoordinates.x;
-		float ycoor = (yrand * cameraHeight) + cameraCoordinates.y;
-		Vector3 coordinates = new Vector3 (xcoor, ycoor, 0);
-
-		/* Implement this later if we have time; for the time
-		 * being we can deal with the bug of initializing a character
-		 * over an existing object */
-		// bool coordinatesGood = isInitializeCoordinateSafe (coordinates);
-		// while (!coordinatesGood) 
-		// {
-		//	coordinates = fixCoordinates(coordinates);
-		//	coordinatesGood = isInitializeCoordinatesSafe(coordinates);
-		// }
-		return coordinates;
+	void CheckValidTasks(bool freeWill = false)
+	{
+		//if campfire intensity > 0
+		//Add RELAX_SIT to ValidTasks list
+		
+		//if palms > 0
+		//Add RELAX_PALMFAN to ValidTasks list
+		
+		//Add SCAVENGE_FOOD, SCAVENGE_WOOD, & SCAVENGE_PALMS to ValidTasks list
+		
+		//if campfire intensity == 0
+		//Add START_FIRE to list
+		
+		//if campfire intensity > 0 && < 3
+		//Add STOKE_FIRE to list
+		
+		//if food > 0
+		//Add EAT_FOOD to list
+		
+		
+		//if 
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)

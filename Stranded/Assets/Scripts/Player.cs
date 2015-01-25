@@ -33,6 +33,8 @@ public class Player : MonoBehaviour {
 
 			if (Mathf.Abs(gamepadMotion.x) < 0.01 && Mathf.Abs (gamepadMotion.y) < 0.01) {
 
+				bool noY = false;
+
 				if (Input.GetKey (KeyCode.W))
 				{
 					motion = new Vector2(motion.x, 1);
@@ -43,8 +45,8 @@ public class Player : MonoBehaviour {
 				}
 				else
 				{
+					noY = true;
 					motion = new Vector2(motion.x, 0);
-					animator.SetBool("walk", false);
 				}
 				
 				if (Input.GetKey (KeyCode.A))
@@ -58,7 +60,9 @@ public class Player : MonoBehaviour {
 				else
 				{
 					motion = new Vector2(0, motion.y);
-					animator.SetBool("walk", false);
+					if (noY) {
+						animator.SetBool("walk", false);
+					}
 				}
 
 			} else {

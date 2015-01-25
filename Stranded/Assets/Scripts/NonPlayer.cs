@@ -9,7 +9,7 @@ using StrandedConstants;
 public class NonPlayer : MonoBehaviour {
 	
 	// Movement
-	public float startingSpeed = 0.03f;
+	public float startingSpeed = 0.5f;
 
 	// Attributes/Moods
 

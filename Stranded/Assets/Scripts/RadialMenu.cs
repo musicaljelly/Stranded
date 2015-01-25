@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using GamepadInput;
 
+
+public class CommandPair {
+	public Task task;
+	public GameObject character;
+}
+
+
 public class RadialMenu : MonoBehaviour {
 
 	float BUTTON_RADIUS = 1.25f;
@@ -146,7 +153,8 @@ public class RadialMenu : MonoBehaviour {
 				}
 
 				if ((Input.GetMouseButtonUp(0) && !usingGamepad) || (GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One) && usingGamepad)) {
-					foreach (GameObject menuItem in commandMenuItems) {
+					for (int i = 0; i < commandMenuItems.Length; i++) {
+						GameObject menuItem = commandMenuItems[i];
 						SpriteRenderer spriteRenderer = menuItem.GetComponent<SpriteRenderer>();
 						if (IsMouseOverObject(menuItem) || (GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One) && spriteRenderer.color.a > 0.999)) {
 							menuItem.renderer.enabled = true;
@@ -168,6 +176,12 @@ public class RadialMenu : MonoBehaviour {
 							if (usingGamepad) {
 								releasedAfterGamepadSelect = false;
 							}
+
+							CommandPair command = new CommandPair();
+							command.character = null;
+							command.task = (Task)i;
+							BroadcastMessage("IssueCommand", command);
+
 						} else {
 							menuItem.renderer.enabled = false;
 						}
@@ -224,5 +238,10 @@ public class RadialMenu : MonoBehaviour {
 		}
 		selectedCommandObject = null;
 		selectedPlayerObject = null;
+	}
+
+	// For debugging purposes
+	void IssueCommand (CommandPair command) {
+		print (command.task);
 	}
 }

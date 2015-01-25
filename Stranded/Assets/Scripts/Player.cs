@@ -11,12 +11,14 @@ public class Player : MonoBehaviour {
 
 	GameObject background = null;
 	GameObject cam = null;
+	Animator animator = null;
 
 
 	// Use this for initialization
 	void Start () {
 		background = GameObject.Find ("beach");
 		cam = GameObject.Find ("Main Camera");
+		animator = this.GetComponentInChildren<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -26,6 +28,8 @@ public class Player : MonoBehaviour {
 
 			Vector2 gamepadMotion = GamePad.GetAxis (GamePad.Axis.LeftStick, GamePad.Index.One);
 			Vector2 motion = new Vector2();
+
+			animator.SetBool ("walk", true);
 
 			if (Mathf.Abs(gamepadMotion.x) < 0.01 && Mathf.Abs (gamepadMotion.y) < 0.01) {
 
@@ -40,6 +44,7 @@ public class Player : MonoBehaviour {
 				else
 				{
 					motion = new Vector2(motion.x, 0);
+					animator.SetBool("walk", false);
 				}
 				
 				if (Input.GetKey (KeyCode.A))
@@ -53,6 +58,7 @@ public class Player : MonoBehaviour {
 				else
 				{
 					motion = new Vector2(0, motion.y);
+					animator.SetBool("walk", false);
 				}
 
 			} else {

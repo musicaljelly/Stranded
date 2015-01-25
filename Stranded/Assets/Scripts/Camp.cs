@@ -6,10 +6,12 @@ public class Camp : MonoBehaviour {
     static float shelterTime = 30f; // time in seconds
     static float shelterCounter = 0f;
     static float campfireCounter = 0f;
-    static float campfireTime = 3f; // Default = 15. time in seconds
+    static float campfireTime = 2f; // Default = 15. time in seconds
     static float campfireStartCounter = 0f;
     static float campfireStartTime = 20f; // time in seconds
     public static int campfireLv = 3;
+    int campfireLvMin = 0;
+    int campfireLvMax = 3;
     public static int shelterLv = 0;
 
     public static int foodStock = 0;
@@ -39,11 +41,18 @@ public class Camp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         UpdateCampfire(); // Degrade over time
-
 	}
 
     void UpdateCampfire()
     {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            campfireLv++;
+        }
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            Debug.Log("fire: " + campfireLv);
+        }
         // If campfire is lit, decrease level over time
         if (campfireLv > 0)
         {
@@ -51,12 +60,16 @@ public class Camp : MonoBehaviour {
             campfireCounter += 1 * Time.deltaTime;
             if (campfireCounter >= campfireTime)
             {
-                sound.StopSound(1);
                 campfireCounter = 0f;
                 campfireLv--;
-				SetFireLevel(campfireLv);
             }
         }
+        else
+        {
+            sound.StopSound(1);
+        }
+        campfireLv = Mathf.Clamp(campfireLv, campfireLvMin, campfireLvMax);
+        SetFireLevel(campfireLv);
     }
     public static void StartCampfire()
     {

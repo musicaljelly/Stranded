@@ -10,7 +10,7 @@ public class RadialMenu : MonoBehaviour {
 	float BUTTON_RADIUS = 1.25f;
 
 	string[] NPC_NAMES = {"Walt", "Claire", "Vincent"};
-	Task[] TASK_ORDER = {Task.IDLE, Task.SCAVENGE_FOOD, Task.SCAVENGE_WOOD, Task.UPGRADE_SHELTER, Task.START_FIRE, Task.SCAVENGE_PALMS};
+	Task[] TASK_ORDER = {Task.IDLE, Task.SCAVENGE_FOOD, Task.SCAVENGE_WOOD, Task.UPGRADE_SHELTER, Task.START_FIRE};
 
 	public static bool isActive = false;
 	bool inStageTwo = false;

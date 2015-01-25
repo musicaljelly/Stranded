@@ -73,20 +73,6 @@ public class NonPlayer : MonoBehaviour {
 		transform.Translate (pathfinder.findNextTranslation());
 		pathfinder.updateCoordinates(transform.position);
 	}
-	
-	// Let's throw all the characters in a random place 
-	// within the camera view to begin with
-	Vector3 initializeCoordinates()
-	{ 
-		Camera mainCamera = GameObject.Find ("Main Camera").camera;
-		Vector3 cameraCoordinates = mainCamera.gameObject.transform.position;
-		float cameraHeight = mainCamera.collider2D.bounds.extents.y / 2;
-		float cameraWidth = mainCamera.collider2D.bounds.extents.x / 2;
-
-		UnityEngine.Random.seed = (int)DateTime.Now.ToFileTime();
-		float xrand = UnityEngine.Random.value - 0.5f;
-		float yrand = UnityEngine.Random.value - 0.5f;
-	}
 
 	void CheckValidTasks(bool freeWill = false)
 	{

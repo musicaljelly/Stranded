@@ -68,6 +68,14 @@ public class Player : MonoBehaviour {
 				obstacleBounds.center = new Vector3(obstacleBounds.center.x, obstacleBounds.center.y, 0);
 				Bounds playerBounds = collider2D.bounds;
 				playerBounds.center = new Vector3(playerBounds.center.x, playerBounds.center.y, 0);
+
+				Bounds backgroundBounds = background.collider2D.bounds;
+				if (transform.position.x < backgroundBounds.min.x || transform.position.x > backgroundBounds.max.x || 
+				    transform.position.y < backgroundBounds.min.y || transform.position.y > backgroundBounds.max.y) {
+					transform.position = oldPos;
+					break;
+				}
+
 				if (playerBounds.Intersects (obstacleBounds)) {
 					Vector3 adjustedPos = transform.position;
 					adjustedPos.y = oldPos.y;
@@ -92,14 +100,14 @@ public class Player : MonoBehaviour {
 			newPos.z = cam.transform.position.z;
 			cam.transform.position = newPos;
 			
-			Bounds backgroundBounds = background.collider2D.bounds;
+			Bounds bgBounds = background.collider2D.bounds;
 			Bounds cameraBounds = cam.collider2D.bounds;
 			
-			if (cameraBounds.min.x < backgroundBounds.min.x || cameraBounds.max.x > backgroundBounds.max.x) {
+			if (cameraBounds.min.x < bgBounds.min.x || cameraBounds.max.x > bgBounds.max.x) {
 				newPos.x = oldCamPos.x;
 			}
 			
-			if (cameraBounds.min.y < backgroundBounds.min.y || cameraBounds.max.y > backgroundBounds.max.y) {
+			if (cameraBounds.min.y < bgBounds.min.y || cameraBounds.max.y > bgBounds.max.y) {
 				newPos.y = oldCamPos.y;
 			}
 			

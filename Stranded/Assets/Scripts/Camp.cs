@@ -6,7 +6,7 @@ public class Camp : MonoBehaviour {
     static float shelterTime = 30f; // time in seconds
     static float shelterCounter = 0f;
     static float campfireCounter = 0f;
-    static float campfireTime = 20f; // time in seconds
+    static float campfireTime = 3f; // Default = 15. time in seconds
     static float campfireStartCounter = 0f;
     static float campfireStartTime = 20f; // time in seconds
     public static int campfireLv = 3;
@@ -21,6 +21,8 @@ public class Camp : MonoBehaviour {
 	static GameObject fire1 = null;
     static GameObject fire2 = null;
     static GameObject fire3 = null;
+
+    Sound sound;
     
     // Use this for initialization
 	void Start () {
@@ -29,11 +31,14 @@ public class Camp : MonoBehaviour {
 		fire3 = GameObject.Find("Fire3");
 
 		SetFireLevel(campfireLv);
+
+        sound = GameObject.FindGameObjectWithTag("Global").GetComponent<Sound>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         UpdateCampfire(); // Degrade over time
+
 	}
 
     void UpdateCampfire()
@@ -41,9 +46,11 @@ public class Camp : MonoBehaviour {
         // If campfire is lit, decrease level over time
         if (campfireLv > 0)
         {
+            sound.PlaySound(1);
             campfireCounter += 1 * Time.deltaTime;
             if (campfireCounter >= campfireTime)
             {
+                sound.StopSound(1);
                 campfireCounter = 0f;
                 campfireLv--;
 				SetFireLevel(campfireLv);

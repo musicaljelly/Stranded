@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using GamepadInput;
-
+using StrandedConstants;
 
 public class CommandPair {
 	public Task task;

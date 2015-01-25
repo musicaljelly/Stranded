@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GamepadInput;
 
 public class Player : MonoBehaviour {
 
@@ -20,6 +21,34 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // Gamepad controls
+        if (GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.One) == new Vector2(0,1))
+        {
+            motion = new Vector2(motion.x, 1);
+        }
+        else if (GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.One) == new Vector2(0, -1))
+        {
+            motion = new Vector2(motion.x, -1);
+        }
+        else
+        {
+            motion = new Vector2(motion.x, 0);
+        }
+
+        if (GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.One) == new Vector2(-1, 0))
+        {
+            motion = new Vector2(-1, motion.y);
+        }
+        else if (GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.One) == new Vector2(1, 0))
+        {
+            motion = new Vector2(1, motion.y);
+        }
+        else
+        {
+            motion = new Vector2(0, motion.y);
+        }
+
+        // Keyboard controls
         if (Input.GetKey(KeyCode.W))
         {
             motion = new Vector2(motion.x, 1);

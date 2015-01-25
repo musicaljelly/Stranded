@@ -148,7 +148,7 @@ public class Pathfinder {
 		bool willHit = false;
 		foreach(GameObject collider in Pathfinder.collisionObjects)
 		{
-			if (collider.renderer.bounds.Intersects(this.characterObject.renderer.bounds))
+			if (collider != characterObject && collider.renderer.bounds.Intersects(characterObject.renderer.bounds))
 			{
 				willHit = true;
 				obstacle = collider;
@@ -163,12 +163,11 @@ public class Pathfinder {
 		GameObject[] allGameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
 		foreach(GameObject obj in allGameObjects)
 		{
-			if ((hasCollider (obj)) && (obj.name != "Main Camera") && (obj.name != "beach")
-				&& (obj.name != characterObject.name))
-				{
-					Pathfinder.collisionObjects.Add(obj);
-				}
+			if ((hasCollider (obj)) && (obj.name != "Main Camera") && (obj.name != "beach"))
+			{
+				Pathfinder.collisionObjects.Add(obj);
 			}
+		}
 		Pathfinder.collisionObjectsInitialized = true;
 	}
 
@@ -196,7 +195,7 @@ public class Pathfinder {
 		// We should go right
 		else if (currentCoordinates.x > obstacle_x)
 		{
-			characterObject.gameObject.transform.Translate(new Vector3(0.5f*currentSpeed, 0f, 0f));
+			characterObject.gameObject.transform.Translate(new Vector3(0.5f * currentSpeed, 0f, 0f));
 		}
 		
 	}
@@ -213,28 +212,28 @@ public class Pathfinder {
 		// We should go up
 		else if (currentCoordinates.y > obstacle_y)
 		{
-			characterObject.gameObject.transform.Translate(new Vector3(0.5f*currentSpeed, 0f, 0f));
+			characterObject.gameObject.transform.Translate(new Vector3(0.5f * currentSpeed, 0f, 0f));
 		}
 		
 	}
 
 	private string mapTaskToTag(Task task)
 	{
-			switch(task)
-			{
-				case (Task.SCAVENGE_FOOD):
-					return "food";
-				case (Task.SCAVENGE_WOOD):
-					return "wood";
-				case (Task.SCAVENGE_PALMS):
-					return "palm";
-				case (Task.START_FIRE):
-					return "fire";
-				case (Task.STOKE_FIRE):
-					return "fire";
-				case (Task.UPGRADE_SHELTER):
-					return "shelter";
-			}
+		switch(task)
+		{
+			case (Task.SCAVENGE_FOOD):
+				return "food";
+			case (Task.SCAVENGE_WOOD):
+				return "wood";
+			case (Task.SCAVENGE_PALMS):
+				return "palm";
+			case (Task.START_FIRE):
+				return "fire";
+			case (Task.STOKE_FIRE):
+				return "fire";
+			case (Task.UPGRADE_SHELTER):
+				return "shelter";
+		}
 		return "";
 	}
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 using StrandedConstants;
 
@@ -58,6 +59,8 @@ public class NonPlayer : MonoBehaviour {
 				break;
 		}
 
+		// For debugging
+		/*
 		if (Input.GetMouseButton (0)) 
 		{
 			pathfinder.updateTask(Task.START_FIRE);
@@ -70,8 +73,9 @@ public class NonPlayer : MonoBehaviour {
 		{
 			pathfinder.updateTask(Task.SCAVENGE_FOOD);
 		}
+		*/
 
-		this.transform.Translate (pathfinder.findNextTranslation());
+		transform.Translate (pathfinder.findNextTranslation());
 		pathfinder.updateCoordinates(transform.position);
 	}
 	
@@ -81,23 +85,15 @@ public class NonPlayer : MonoBehaviour {
 	{ 
 		Camera mainCamera = GameObject.Find ("Main Camera").camera;
 		Vector3 cameraCoordinates = mainCamera.gameObject.transform.position;
-		float cameraHeight = mainCamera.orthographicSize;
-		float cameraWidth = cameraHeight * mainCamera.aspect;
+		float cameraHeight = mainCamera.collider2D.bounds.extents.y / 2;
+		float cameraWidth = mainCamera.collider2D.bounds.extents.x / 2;
 
-		float xrand = Random.value;
-		float yrand = Random.value;
-		int xmirror = 1;
-		int ymirror = 1;
+		UnityEngine.Random.seed = (int)DateTime.Now.ToFileTime();
+		float xrand = UnityEngine.Random.value - 0.5f;
+		float yrand = UnityEngine.Random.value - 0.5f;
 
-		if (xrand > 0.5) {
-			xmirror = -1;
-		}
-		if (yrand > 0.5) {
-			ymirror = -1;
-		}
-
-		float xcoor = (Random.value * cameraWidth * xmirror) + cameraCoordinates.x;
-		float ycoor = (Random.value * cameraHeight * ymirror) + cameraCoordinates.y;
+		float xcoor = (xrand * cameraWidth) + cameraCoordinates.x;
+		float ycoor = (yrand * cameraHeight) + cameraCoordinates.y;
 		Vector3 coordinates = new Vector3 (xcoor, ycoor, 0);
 
 		/* Implement this later if we have time; for the time

@@ -4,7 +4,7 @@ using System.Collections;
 public class TimeCycle : MonoBehaviour
 {
 	int morningFadeInLength = 30;
-    int morningLength = 240;
+    int morningLength = /*240*/30;
     int nightLength = 60;
     int dayLength;
 
@@ -23,12 +23,15 @@ public class TimeCycle : MonoBehaviour
 
 	SpriteRenderer nightCoverRenderer = null;
 
+	Color referenceColor = new Color(0, 0, 0, 0);
+
 	// Use this for initialization
 	void Start () {
         dayLength = morningLength + nightLength;
         //guiTexture.pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
 		
 		nightCoverRenderer = GetComponent<SpriteRenderer> ();
+		referenceColor = nightCoverRenderer.color;
 	}
 	
 	// Update is called once per frame
@@ -54,15 +57,26 @@ public class TimeCycle : MonoBehaviour
             }
         }
 
+		Color newColor = nightCoverRenderer.color;
 		if (currentTime < morningFadeInLength) {
-			Color newColor = nightCoverRenderer.color;
+			if (newColor.a > 0.999) {
+				newColor = referenceColor;
+			}
 			newColor.a = ((morningFadeInLength - currentTime) / (2 * morningFadeInLength));
-			nightCoverRenderer.color = newColor;
-		} else if (currentTime > morningLength) {
-			Color newColor = nightCoverRenderer.color;
-			newColor.a = ((currentTime - morningLength) / nightLength);
-			nightCoverRenderer.color = newColor;
+		} else if (currentTime > morningLength && currentTime < morningLength + nightLength - 2) {
+			newColor.a = ((currentTime - morningLength) / (nightLength * 1.5f));
+		} else if (currentTime > morningLength + nightLength - 2 && currentTime < morningLength + nightLength - 1) {
+			newColor.a += 0.01f;
+			newColor.r -= 0.01f;
+			newColor.g -= 0.01f;
+			newColor.b -= 0.01f;
+		} else if (currentTime > morningLength + nightLength - 1 && currentTime < morningLength + nightLength) {
+			newColor.a = 1f;
+			newColor.r = 0f;
+			newColor.g = 0f;
+			newColor.b = 0f;
 		}
+		nightCoverRenderer.color = newColor;
 
 	}
 
@@ -74,8 +88,7 @@ public class TimeCycle : MonoBehaviour
     void EndDay()
     {
         pauseTime = true;
-
-        FadeToBlack();
+		
         NewDay();
         FadeToClear();
 

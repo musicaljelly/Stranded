@@ -48,3 +48,7 @@ TagManager:
     userID: 1
     uniqueID: 1501370003
     locked: 0
+  - name: Night Cover
+    userID: 2
+    uniqueID: 37354883
+    locked: 0

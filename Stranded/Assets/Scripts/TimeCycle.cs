@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TimeCycle : MonoBehaviour
 {
+	int morningFadeInLength = 30;
     int morningLength = 240;
     int nightLength = 60;
     int dayLength;
@@ -18,13 +19,16 @@ public class TimeCycle : MonoBehaviour
     bool pauseTime = false; // used to pause time passage for day transitioning and game pausing
     float fadeSpeed = 1.5f;
 
-    float currentTime = 298;
+    float currentTime = 0;
+
+	SpriteRenderer nightCoverRenderer = null;
 
 	// Use this for initialization
 	void Start () {
         dayLength = morningLength + nightLength;
-
-        guiTexture.pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
+        //guiTexture.pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
+		
+		nightCoverRenderer = GetComponent<SpriteRenderer> ();
 	}
 	
 	// Update is called once per frame
@@ -50,6 +54,16 @@ public class TimeCycle : MonoBehaviour
             }
         }
 
+		if (currentTime < morningFadeInLength) {
+			Color newColor = nightCoverRenderer.color;
+			newColor.a = ((morningFadeInLength - currentTime) / (2 * morningFadeInLength));
+			nightCoverRenderer.color = newColor;
+		} else if (currentTime > morningLength) {
+			Color newColor = nightCoverRenderer.color;
+			newColor.a = ((currentTime - morningLength) / nightLength);
+			nightCoverRenderer.color = newColor;
+		}
+
 	}
 
 	// FixedUpdate is called once per fixed framerate frame
@@ -70,6 +84,7 @@ public class TimeCycle : MonoBehaviour
     
     void FadeToBlack ()
     {
+
     }
 
     void FadeToClear ()

@@ -30,6 +30,8 @@ public class RadialMenu : MonoBehaviour {
 	List<GameObject> playerMenuItems = new List<GameObject>();
 	List<GameObject> commandMenuItems = new List<GameObject>();
 
+	GameObject lastSelected = null;
+
     Sound sound;
 
 	string PLAYER_MENU_ITEM_NAME = "uibubble";
@@ -126,7 +128,11 @@ public class RadialMenu : MonoBehaviour {
 					color.a = 0.7f;
 					if ((IsMouseOverObject(item) && !usingGamepad) || (IsControllerPointingAtObject(angleDifference, angleSize)) && usingGamepad) {
 						color.a = 1;
-                        sound.PlaySound(2);
+						if (lastSelected != item) {
+							sound.StopSound (2);
+                        	sound.PlaySound(2);
+							lastSelected = item;
+						}
 					}
 					spriteRenderer.color = color;
 				}
@@ -175,7 +181,11 @@ public class RadialMenu : MonoBehaviour {
 					color.a = 0.7f;
 					if ((IsMouseOverObject(item) && !usingGamepad) || (IsControllerPointingAtObject(angleDifference, angleSize)) && usingGamepad) {
 						color.a = 1;
-                        sound.PlaySound(2);
+						if (lastSelected != item) {
+							sound.StopSound(2);
+                        	sound.PlaySound(2);
+							lastSelected = item;
+						}
 					}
 					spriteRenderer.color = color;
 

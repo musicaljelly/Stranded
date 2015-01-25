@@ -9,7 +9,7 @@ using StrandedConstants;
 public class NonPlayer : MonoBehaviour {
 	
 	// Movement
-	public float startingSpeed = 0.03f;
+	public float startingSpeed = 0.5f;
 
 	// Attributes/Moods
 
@@ -24,7 +24,7 @@ public class NonPlayer : MonoBehaviour {
 		this.transform.Translate (coordinateDifference, Space.World);
 
 		
-		pathfinder = new Pathfinder (Task.IDLE, startingSpeed, renderer.bounds.size,
+		pathfinder = new Pathfinder (Task.IDLE, startingSpeed, this.gameObject,
 		                             this.transform.position);
 	}
 	
@@ -58,18 +58,23 @@ public class NonPlayer : MonoBehaviour {
 				break;
 		}
 
-		if (Input.GetMouseButton (0) && !RadialMenu.isActive) 
+		if (Input.GetMouseButton (0)) 
 		{
-			//Debug.Log("Got some mouse action");
-			pathfinder.currentTask = Task.EAT_FOOD;
-			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			pathfinder.setCurrentTaskCoordinates(mousePosition);
+			pathfinder.updateTask(Task.START_FIRE);
 		}
+		else if (Input.GetMouseButton(1))
+		{
+			pathfinder.updateTask(Task.UPGRADE_SHELTER);
+		}
+		else if (Input.GetKey (KeyCode.Space))
+		{
+			pathfinder.updateTask(Task.SCAVENGE_FOOD);
+		}
+
 		this.transform.Translate (pathfinder.findNextTranslation());
 		pathfinder.updateCoordinates(transform.position);
 	}
-
-
+	
 	// Let's throw all the characters in a random place 
 	// within the camera view to begin with
 	Vector3 initializeCoordinates()
@@ -105,6 +110,14 @@ public class NonPlayer : MonoBehaviour {
 		//	coordinatesGood = isInitializeCoordinatesSafe(coordinates);
 		// }
 		return coordinates;
+	}
+
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "food")
+		{
+			Destroy(collision.gameObject);
+		}
 	}
 
 	void CheckValidTasks(bool freeWill = false)

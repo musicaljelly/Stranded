@@ -9,7 +9,7 @@ public class Obstacle : MonoBehaviour {
 	void Start () {
 
 		// This lets the player know that this obstacle exists for collision purposes
-		player = GameObject.Find("player");
+		player = GameObject.Find("Rose");
 		Player playerComponent = player.GetComponent<Player> ();
 		playerComponent.obstacles.Add (this.gameObject);
 

@@ -4,7 +4,7 @@ using System.Collections;
 public class TimeCycle : MonoBehaviour
 {
 	int morningFadeInLength = 30;
-    int morningLength = /*240*/30;
+    int morningLength = 240;
     int nightLength = 60;
     int dayLength;
 
@@ -17,7 +17,6 @@ public class TimeCycle : MonoBehaviour
     // EndDay vars
     bool dayNight = false; // false = DAY | true = NIGHT.
     bool pauseTime = false; // used to pause time passage for day transitioning and game pausing
-    float fadeSpeed = 1.5f;
 
     float currentTime = 0;
 

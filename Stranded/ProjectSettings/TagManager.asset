@@ -4,8 +4,14 @@
 TagManager:
   tags:
   - CommandMenuItem
-  - 
   - PlayerMenuItem
+  - food
+  - wood
+  - palm
+  - fire
+  - shelter
+  - NPC
+  - 
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -44,11 +50,15 @@ TagManager:
     userID: 0
     uniqueID: 0
     locked: 0
-  - name: Radial Menu
-    userID: 1
-    uniqueID: 1501370003
+  - name: RoseLayer
+    userID: 3
+    uniqueID: 188215549
     locked: 0
   - name: Night Cover
     userID: 2
     uniqueID: 37354883
+    locked: 0
+  - name: Radial Menu
+    userID: 1
+    uniqueID: 1501370003
     locked: 0

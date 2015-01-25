@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TimeCycle : MonoBehaviour
 {
-	int morningFadeInLength = 30;
+	int morningFadeInLength = 15;
     int morningLength = 240;
     int nightLength = 60;
     int dayLength;
@@ -61,7 +61,7 @@ public class TimeCycle : MonoBehaviour
 			if (newColor.a > 0.999) {
 				newColor = referenceColor;
 			}
-			newColor.a = ((morningFadeInLength - currentTime) / (2 * morningFadeInLength));
+			newColor.a = ((morningFadeInLength - currentTime) / (2.5f * morningFadeInLength));
 		} else if (currentTime > morningLength && currentTime < morningLength + nightLength - 2) {
 			newColor.a = ((currentTime - morningLength) / (nightLength * 1.5f));
 		} else if (currentTime > morningLength + nightLength - 2 && currentTime < morningLength + nightLength - 1) {

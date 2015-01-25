@@ -87,7 +87,6 @@ public class Pathfinder {
 
 	public void setCurrentTaskCoordinates(Vector3 coor)
 	{
-		Debug.Log ("setCurrentTaskCoordinates called, set to " + coor.x + ", " + coor.y);
 		currentTaskCoordinates = coor;
 	}
 

@@ -10,6 +10,11 @@ public class RadialMenu : MonoBehaviour {
 	bool inStageTwo = false;
 	bool showingResult = false;
 
+	float RESULT_START_TIME = 1.0f;
+	float resultTimeLeft = -1.0f;
+	GameObject selectedCommandObject = null;
+	GameObject selectedPlayerObject = null;
+
 	float radius = 3f;
 
 	GameObject[] playerMenuItems = null;
@@ -27,20 +32,27 @@ public class RadialMenu : MonoBehaviour {
 		if (Input.GetMouseButtonDown (2)) {
 			isActive = !isActive;
 			if (!isActive) {
-				inStageTwo = false;
-				showingResult = false;
-				foreach (GameObject item in playerMenuItems) {
-					item.renderer.enabled = false;
-				}
-				foreach (GameObject item in commandMenuItems) {
-					item.renderer.enabled = false;
-				}
+				Reset();
 			}
 		}
 
 		if (isActive) {
 			if (showingResult) {
-				// blabla
+				SpriteRenderer spriteRenderer = selectedCommandObject.GetComponent<SpriteRenderer>();
+				Color newColor = spriteRenderer.color;
+				resultTimeLeft -= Time.deltaTime;
+				newColor.a = resultTimeLeft;
+
+				selectedCommandObject.transform.position = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.y);
+
+				if (resultTimeLeft < 0) {
+					newColor.a = 1.0f;
+					selectedCommandObject.renderer.enabled = false;
+					Reset();
+				}
+
+				spriteRenderer.color = newColor;
+
 			} else if (!inStageTwo) {
 				for (int i = 0; i < playerMenuItems.Length; i++) {
 					GameObject item = playerMenuItems[i];
@@ -72,6 +84,7 @@ public class RadialMenu : MonoBehaviour {
 							newPos.z = menuItem.transform.position.z;
 							menuItem.transform.position = newPos;
 							inStageTwo = true;
+							selectedPlayerObject = menuItem;
 						} else {
 							menuItem.renderer.enabled = false;
 						}
@@ -103,6 +116,8 @@ public class RadialMenu : MonoBehaviour {
 						color.a = 1;
 					}
 					spriteRenderer.color = color;
+
+					selectedPlayerObject.transform.position = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.y);
 				}
 
 				if (Input.GetMouseButtonUp(0)) {
@@ -113,12 +128,15 @@ public class RadialMenu : MonoBehaviour {
 							newPos.z = menuItem.transform.position.z;
 							menuItem.transform.position = newPos;
 							showingResult = true;
+							selectedCommandObject = menuItem;
+							resultTimeLeft = RESULT_START_TIME;
+							selectedPlayerObject.renderer.enabled = false;
 						} else {
 							menuItem.renderer.enabled = false;
 						}
 					}
 					if (!showingResult) {
-						foreach (GameObject menuItem in playerMenuItems) {
+						foreach (GameObject menuItem in commandMenuItems) {
 							menuItem.renderer.enabled = true;
 						}
 					}
@@ -137,5 +155,19 @@ public class RadialMenu : MonoBehaviour {
 	bool IsMouseOverObject (GameObject obj) {
 		Vector2 mousePosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		return Vector2.Distance (mousePosInWorld, new Vector2 (obj.transform.position.x, obj.transform.position.y)) < BUTTON_RADIUS;
+	}
+
+	void Reset () {
+		isActive = false;
+		inStageTwo = false;
+		showingResult = false;
+		foreach (GameObject item in playerMenuItems) {
+			item.renderer.enabled = false;
+		}
+		foreach (GameObject item in commandMenuItems) {
+			item.renderer.enabled = false;
+		}
+		selectedCommandObject = null;
+		selectedPlayerObject = null;
 	}
 }

@@ -8,7 +8,7 @@ AnimatorController:
   m_Name: Claire
   serializedVersion: 2
   m_AnimatorParameters:
-  - m_Name: walking
+  - m_Name: walk
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -39,7 +39,7 @@ Transition:
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: walking
+    m_ConditionEvent: walk
     m_EventTreshold: 0
     m_ExitTime: .78125
   m_Atomic: 1
@@ -59,7 +59,7 @@ Transition:
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: walking
+    m_ConditionEvent: walk
     m_EventTreshold: 0
     m_ExitTime: .899999976
   m_Atomic: 1

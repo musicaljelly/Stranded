@@ -6,7 +6,7 @@ public class Camp : MonoBehaviour {
     static float shelterTime = 30f; // time in seconds
     static float shelterCounter = 0f;
     static float campfireCounter = 0f;
-    static float campfireTime = 3f; // Default = 15. time in seconds
+    static float campfireTime = 15f; // Default = 15. time in seconds
     static float campfireStartCounter = 0f;
     static float campfireStartTime = 20f; // time in seconds
     public static int campfireLv = 3;

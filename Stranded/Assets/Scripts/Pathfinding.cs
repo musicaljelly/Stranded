@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 using StrandedConstants;
 
 
@@ -12,15 +13,17 @@ public class Pathfinder {
 	public float currentSpeed;
 	Vector3 currentCoordinates;
 
-	private Vector3 characterImageSize;
+	private GameObject characterObject;
 	private Vector3 currentTaskCoordinates;
 
+	private GameObject obstacle;
+
 	public Pathfinder(Task startingTask, float startingSpeed, 
-	                  Vector3 characterSize, Vector3 coordinates)
+	                  GameObject gameObj, Vector3 coordinates)
 	{
 		currentTask = startingTask;
 		currentSpeed = startingSpeed;
-		characterImageSize = characterSize;
+		characterObject = gameObj;
 		currentCoordinates = coordinates;
 	}
 
@@ -37,8 +40,8 @@ public class Pathfinder {
 		}
 		else
 		{
-			float delta_x = currentTaskCoordinates.x - currentCoordinates.x;
-			float delta_y = currentTaskCoordinates.y - currentCoordinates.y;
+			float delta_x = currentTaskCoordinates.x - characterObject.transform.position.x; 
+			float delta_y = currentTaskCoordinates.y - characterObject.transform.position.y;
 
 			Vector3 delta_vector = new Vector3(delta_x, delta_y, 0f);
 			delta_vector.Normalize();
@@ -46,8 +49,19 @@ public class Pathfinder {
 			// Later we can change Z if we want to walk "behind" an obstacle
 			// Much like what we do for player
 			Vector3 movement = new Vector3(delta_vector.x * currentSpeed,
-			                               delta_vector.y * currentSpeed, 0);
+			                               delta_vector.y * currentSpeed, 0f);
 
+			if (willHitSomething (movement))
+			{
+				if (Math.Abs(movement.y) > Math.Abs(movement.x))
+				{
+					takeDetourX ();
+				}
+				else
+				{
+					takeDetourY();
+				}
+			}
 			return movement;
 		}
 	}
@@ -70,12 +84,12 @@ public class Pathfinder {
 
 	bool isGoalReached()
 	{
-		float delta_x = currentCoordinates.x - currentTaskCoordinates.x;
-		float delta_y = currentCoordinates.y - currentTaskCoordinates.y;
-		if ((((delta_x <= 0) && (delta_x*-1 <= this.characterImageSize.x))
-			|| ((delta_x >= 0) && (delta_x <= this.characterImageSize.x)))
-			&& (((delta_y <= 0) && (delta_y*-1 <= this.characterImageSize.y))
-			    || ((delta_y >= 0) && (delta_y <= this.characterImageSize.y))))
+		float delta_x = currentTaskCoordinates.x - currentCoordinates.x;
+		float delta_y = currentTaskCoordinates.y - currentCoordinates.y;
+		if ((((delta_x <= 0) && (delta_x*-1 <= characterObject.renderer.bounds.size.x))
+		     || ((delta_x >= 0) && (delta_x <= characterObject.renderer.bounds.size.x)))
+		    && (((delta_y <= 0) && (delta_y*-1 <= characterObject.renderer.bounds.size.y))
+		    || ((delta_y >= 0) && (delta_y <= characterObject.renderer.bounds.size.y))))
 		{
 			return true;
 		}
@@ -90,4 +104,80 @@ public class Pathfinder {
 		currentTaskCoordinates = coor;
 	}
 
+	private bool willHitSomething(Vector3 coordinates)
+	{
+		// Just loop through all GameObjects that have colliders
+		// and make sure we're not walking into one.
+
+		bool willHit = false;
+
+		GameObject[] allGameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+		List<GameObject> gameObjsWithColliders = new List<GameObject>();
+		foreach(GameObject obj in allGameObjects)
+		{
+			if ((hasCollider (obj)) && (obj.name != "Main Camera") && (obj.name != "beach")
+			    && (obj.name != characterObject.name))
+			{
+				gameObjsWithColliders.Add(obj);
+			}
+		}
+	
+		foreach(GameObject collider in gameObjsWithColliders)
+		{
+			if (collider.renderer.bounds.Intersects(this.characterObject.renderer.bounds))
+			{
+				willHit = true;
+				obstacle = collider;
+			}
+		
+		}
+		return willHit;
+	}
+
+	private bool hasCollider(GameObject obj)
+	{
+		if (obj.collider2D != null)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	private void takeDetourX()
+	{
+		float obstacle_x = obstacle.gameObject.transform.position.x;
+
+		// We should go left
+		if (currentCoordinates.x < obstacle_x)
+		{
+			characterObject.gameObject.transform.Translate(new Vector3(-0.5f * currentSpeed, 0f, 0f));
+		}
+		// We should go right
+		else if (currentCoordinates.x > obstacle_x)
+		{
+			characterObject.gameObject.transform.Translate(new Vector3(0.5f*currentSpeed, 0f, 0f));
+		}
+		
+	}
+
+	private void takeDetourY()
+	{
+		float obstacle_y = obstacle.gameObject.transform.position.y;
+		
+		// We should go down
+		if (currentCoordinates.y < obstacle_y)
+		{
+			characterObject.gameObject.transform.Translate(new Vector3(-0.5f * currentSpeed, 0f, 0f));
+		}
+		// We should go up
+		else if (currentCoordinates.y > obstacle_y)
+		{
+			characterObject.gameObject.transform.Translate(new Vector3(0.5f*currentSpeed, 0f, 0f));
+		}
+		
+	}
+ 
 }

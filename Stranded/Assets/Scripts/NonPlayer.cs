@@ -9,13 +9,13 @@ using StrandedConstants;
 public class NonPlayer : MonoBehaviour {
 	
 	// Movement
-	public float startingSpeed = 0.03f;
+	public float startingSpeed = 0.3f;
 
 	// Attributes/Moods
 
 
 	// Pathfinding
-	Pathfinder pathfinder;
+	public Pathfinder pathfinder;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +24,7 @@ public class NonPlayer : MonoBehaviour {
 		this.transform.Translate (coordinateDifference, Space.World);
 
 		
-		pathfinder = new Pathfinder (Task.IDLE, startingSpeed, renderer.bounds.size,
+		pathfinder = new Pathfinder (Task.IDLE, startingSpeed, this.gameObject,
 		                             this.transform.position);
 	}
 	
@@ -58,7 +58,6 @@ public class NonPlayer : MonoBehaviour {
 
 		if (Input.GetMouseButton (0)) 
 		{
-			Debug.Log("Got some mouse action");
 			pathfinder.currentTask = Task.COOK_FOOD;
 			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			pathfinder.setCurrentTaskCoordinates(mousePosition);

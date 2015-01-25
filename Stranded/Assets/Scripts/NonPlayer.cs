@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 using StrandedConstants;
@@ -38,7 +38,9 @@ public class NonPlayer : MonoBehaviour {
 		{
 			case (Task.IDLE):
 				break;
-			case (Task.RELAX):
+			case (Task.RELAX_SIT):
+				break;
+			case (Task.RELAX_PALMFAN):
 				break;
 			case (Task.SCAVENGE_FOOD):
 				break;
@@ -50,7 +52,7 @@ public class NonPlayer : MonoBehaviour {
 				break;
 			case (Task.STOKE_FIRE):
 				break;
-			case (Task.COOK_FOOD):
+			case (Task.UPGRADE_SHELTER):
 				break;
 			case (Task.EAT_FOOD):
 				break;
@@ -59,7 +61,7 @@ public class NonPlayer : MonoBehaviour {
 		if (Input.GetMouseButton (0) && !RadialMenu.isActive) 
 		{
 			//Debug.Log("Got some mouse action");
-			pathfinder.currentTask = Task.COOK_FOOD;
+			pathfinder.currentTask = Task.EAT_FOOD;
 			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			pathfinder.setCurrentTaskCoordinates(mousePosition);
 		}
@@ -104,9 +106,27 @@ public class NonPlayer : MonoBehaviour {
 		// }
 		return coordinates;
 	}
+
+	void CheckValidTasks(bool freeWill = false)
+	{
+		//if campfire intensity > 0
+		//Add RELAX_SIT to ValidTasks list
+		
+		//if palms > 0
+		//Add RELAX_PALMFAN to ValidTasks list
+		
+		//Add SCAVENGE_FOOD, SCAVENGE_WOOD, & SCAVENGE_PALMS to ValidTasks list
+		
+		//if campfire intensity == 0
+		//Add START_FIRE to list
+		
+		//if campfire intensity > 0 && < 3
+		//Add STOKE_FIRE to list
+		
+		//if food > 0
+		//Add EAT_FOOD to list
+		
+		
+		//if 
+	}
 }
-
-
-
-
-

@@ -72,6 +72,16 @@ public class Player : MonoBehaviour {
 					Vector3 adjustedPos = transform.position;
 					adjustedPos.y = oldPos.y;
 					transform.position = adjustedPos;
+
+					obstacleBounds = obstacle.collider2D.bounds;
+					obstacleBounds.center = new Vector3(obstacleBounds.center.x, obstacleBounds.center.y, 0);
+					playerBounds = collider2D.bounds;
+					playerBounds.center = new Vector3(playerBounds.center.x, playerBounds.center.y, 0);
+
+					if (playerBounds.Intersects (obstacleBounds)) {
+						adjustedPos.x = oldPos.x;
+					}
+					transform.position = adjustedPos;
 					break;
 				}
 			}

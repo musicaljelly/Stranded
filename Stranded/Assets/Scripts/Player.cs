@@ -120,6 +120,9 @@ public class Player : MonoBehaviour {
 			}
 			
 			cam.transform.position = newPos;
+
+		} else {
+			animator.SetBool ("walk", false);
 		}
 	}
 

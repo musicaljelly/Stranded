@@ -13,11 +13,12 @@ public class NonPlayer : MonoBehaviour {
 	public float startingSpeed = 0.5f;
 
 	// Attributes/Moods
-
+    Personality personality;
 
 	// Pathfinding
 	public Pathfinder pathfinder;
 
+	// Use this for initialization
 	// Use this for initialization
 	void Start () {
 		pathfinder = new Pathfinder (Task.IDLE, startingSpeed, this.gameObject,
@@ -26,7 +27,6 @@ public class NonPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		// Update attributes/mood
 
 		// Graphics and Movement/Pathfinding
@@ -73,6 +73,20 @@ public class NonPlayer : MonoBehaviour {
 		transform.Translate (pathfinder.findNextTranslation());
 		pathfinder.updateCoordinates(transform.position);
 	}
+	
+	// Let's throw all the characters in a random place 
+	// within the camera view to begin with
+	Vector3 initializeCoordinates()
+	{ 
+		Camera mainCamera = GameObject.Find ("Main Camera").camera;
+		Vector3 cameraCoordinates = mainCamera.gameObject.transform.position;
+		float cameraHeight = mainCamera.collider2D.bounds.extents.y / 2;
+		float cameraWidth = mainCamera.collider2D.bounds.extents.x / 2;
+
+		UnityEngine.Random.seed = (int)DateTime.Now.ToFileTime();
+		float xrand = UnityEngine.Random.value - 0.5f;
+		float yrand = UnityEngine.Random.value - 0.5f;
+	}
 
 	void CheckValidTasks(bool freeWill = false)
 	{
@@ -96,4 +110,17 @@ public class NonPlayer : MonoBehaviour {
 		
 		//if 
 	}
+
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "food")
+		{
+			Destroy(collision.gameObject);
+		}
+	}
+
+    public Task GetCurrentTask()
+    {
+        return this.pathfinder.currentTask;
+    }
 }

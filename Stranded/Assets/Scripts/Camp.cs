@@ -3,24 +3,25 @@ using System.Collections;
 
 public class Camp : MonoBehaviour {
 
-    float shelterTime = 30f; // time in seconds
-    float shelterCounter = 0f;
-    float campfireCounter = 0f;
-    float campfireTime = 20f; // time in seconds
-    float campfireStartCounter = 0f;
-    float campfireStartTime = 20f; // time in seconds
-    int campfireLv = 3;
-    int shelterLv = 0;
+    static float shelterTime = 30f; // time in seconds
+    static float shelterCounter = 0f;
+    static float campfireCounter = 0f;
+    static float campfireTime = 20f; // time in seconds
+    static float campfireStartCounter = 0f;
+    static float campfireStartTime = 20f; // time in seconds
+    public static int campfireLv = 3;
+    public static int shelterLv = 0;
+
     public static int foodStock = 0;
     public static int woodStock = 2;
     public static int palmStock = 4;
 
-    bool shelterUpgrading = false;
-    bool campfireStarting = false;
+    public static bool shelterUpgrading = false;
+    public static bool campfireStarting = false;
 
-	GameObject fire1 = null;
-	GameObject fire2 = null;
-	GameObject fire3 = null;
+	static GameObject fire1 = null;
+    static GameObject fire2 = null;
+    static GameObject fire3 = null;
     
     // Use this for initialization
 	void Start () {
@@ -50,7 +51,7 @@ public class Camp : MonoBehaviour {
             }
         }
     }
-    public void StartCampfire()
+    public static void StartCampfire()
     {
         if (IsValidSTARTCAMPFIRE())
         {
@@ -73,7 +74,7 @@ public class Camp : MonoBehaviour {
             }
         }
     }
-    public bool IsValidSTARTCAMPFIRE()
+    public static bool IsValidSTARTCAMPFIRE()
     {
         if (woodStock > 0 && campfireLv == 0 && campfireStarting == false)
         {
@@ -84,7 +85,7 @@ public class Camp : MonoBehaviour {
             return false;
         }
     }
-    public void StokeCampfire()
+    public static void StokeCampfire()
     {
         if (IsValidSTOKECAMPFIRE())
         {
@@ -93,7 +94,7 @@ public class Camp : MonoBehaviour {
 			SetFireLevel(campfireLv);
         }
     }
-    public bool IsValidSTOKECAMPFIRE()
+    public static bool IsValidSTOKECAMPFIRE()
     {
         if (woodStock > 0 && campfireLv > 0)
         {
@@ -105,7 +106,7 @@ public class Camp : MonoBehaviour {
         }
     }
 
-    public void UpgradeShelter()
+    public static void UpgradeShelter()
     {
         if (IsValidUPGRADESHELTER())
         {
@@ -128,7 +129,7 @@ public class Camp : MonoBehaviour {
             }
         }
     }
-    public bool IsValidUPGRADESHELTER()
+    public static bool IsValidUPGRADESHELTER()
     {
         if (shelterLv == 0 && woodStock >= 2 && palmStock >= 4 && shelterUpgrading == false)
         {
@@ -140,7 +141,8 @@ public class Camp : MonoBehaviour {
         }
     }
 
-	void SetFireLevel(int level) {
+    static void SetFireLevel(int level)
+    {
 		fire1.renderer.enabled = false;
 		fire2.renderer.enabled = false;
 		fire3.renderer.enabled = false;

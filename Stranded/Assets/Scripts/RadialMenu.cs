@@ -10,7 +10,7 @@ public class RadialMenu : MonoBehaviour {
 	float BUTTON_RADIUS = 1.25f;
 
 	string[] NPC_NAMES = {"Walt", "Claire", "Vincent"};
-	Task[] TASK_ORDER = {Task.IDLE, Task.SCAVENGE_FOOD, Task.SCAVENGE_WOOD, Task.UPGRADE_SHELTER, Task.START_FIRE, Task.SCAVENGE_PALMS};
+	Task[] TASK_ORDER = {Task.IDLE, Task.SCAVENGE_FOOD, Task.SCAVENGE_WOOD, Task.UPGRADE_SHELTER, Task.START_FIRE};
 
 	public static bool isActive = false;
 	bool inStageTwo = false;
@@ -29,6 +29,8 @@ public class RadialMenu : MonoBehaviour {
 
 	List<GameObject> playerMenuItems = new List<GameObject>();
 	List<GameObject> commandMenuItems = new List<GameObject>();
+
+    Sound sound;
 
 	string PLAYER_MENU_ITEM_NAME = "uibubble";
 	string COMMAND_MENU_ITEM_NAME = "commanduibubble";
@@ -54,6 +56,8 @@ public class RadialMenu : MonoBehaviour {
 				}
 			}
 		}
+
+        sound = GameObject.FindGameObjectWithTag("Global").GetComponent<Sound>();
 	}
 	
 	// Update is called once per frame
@@ -122,6 +126,7 @@ public class RadialMenu : MonoBehaviour {
 					color.a = 0.7f;
 					if ((IsMouseOverObject(item) && !usingGamepad) || (IsControllerPointingAtObject(angleDifference, angleSize)) && usingGamepad) {
 						color.a = 1;
+                        sound.PlaySound(2);
 					}
 					spriteRenderer.color = color;
 				}
@@ -139,6 +144,7 @@ public class RadialMenu : MonoBehaviour {
 							inStageTwo = true;
 							selectedPlayerObject = menuItem;
 							selectedPlayerIndex = i;
+                            sound.PlaySound(3);
 						} else {
 							menuItem.renderer.enabled = false;
 						}
@@ -169,6 +175,7 @@ public class RadialMenu : MonoBehaviour {
 					color.a = 0.7f;
 					if ((IsMouseOverObject(item) && !usingGamepad) || (IsControllerPointingAtObject(angleDifference, angleSize)) && usingGamepad) {
 						color.a = 1;
+                        sound.PlaySound(2);
 					}
 					spriteRenderer.color = color;
 
@@ -201,6 +208,7 @@ public class RadialMenu : MonoBehaviour {
 							}
 
 							IssueCommand((Task)TASK_ORDER[i]);
+                            sound.PlaySound(3);
 
 						} else {
 							menuItem.renderer.enabled = false;

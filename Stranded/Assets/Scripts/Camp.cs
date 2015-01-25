@@ -11,9 +11,9 @@ public class Camp : MonoBehaviour {
     float campfireStartTime = 20f; // time in seconds
     int campfireLv = 3;
     int shelterLv = 0;
-    int foodStock = 0;
-    int woodStock = 2;
-    int palmStock = 4;
+    public static int foodStock = 0;
+    public static int woodStock = 2;
+    public static int palmStock = 4;
 
     bool shelterUpgrading = false;
     bool campfireStarting = false;
@@ -152,5 +152,15 @@ public class Camp : MonoBehaviour {
 		} else if (level == 3) {
 			fire3.renderer.enabled = true;
 		}
+	}
+
+	public static void AddToFoodStock(int numFood)
+	{
+		Camp.foodStock = Camp.foodStock + numFood;
+	}
+
+	public static void AddToWoodStock(int numWood)
+	{
+		Camp.woodStock = Camp.woodStock+ numWood;
 	}
 }

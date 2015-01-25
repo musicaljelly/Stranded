@@ -74,15 +74,6 @@ public class NonPlayer : MonoBehaviour {
 		pathfinder.updateCoordinates(transform.position);
 	}
 
-
-	void OnCollisionEnter2D(Collision2D collision)
-	{
-		if (collision.gameObject.tag == "food")
-		{
-			Destroy(collision.gameObject);
-		}
-	}
-
 	void CheckValidTasks(bool freeWill = false)
 	{
 		//if campfire intensity > 0

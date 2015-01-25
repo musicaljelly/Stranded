@@ -4,17 +4,14 @@ using System.Collections.Generic;
 using GamepadInput;
 using StrandedConstants;
 
-public class CommandPair {
-	public Task task;
-	public GameObject character;
-}
-
 
 public class RadialMenu : MonoBehaviour {
 
 	float BUTTON_RADIUS = 1.25f;
 
-	bool isActive = false;
+	string[] NPC_NAMES = {"nonplayer1", "nonplayer2", "nonplayer3", "nonplayer4"};
+
+	public static bool isActive = false;
 	bool inStageTwo = false;
 	bool showingResult = false;
 	bool usingGamepad = false;
@@ -24,6 +21,7 @@ public class RadialMenu : MonoBehaviour {
 	float resultTimeLeft = -1.0f;
 	GameObject selectedCommandObject = null;
 	GameObject selectedPlayerObject = null;
+	int selectedPlayerIndex = 0;
 
 	float radius = 3f;
 
@@ -107,7 +105,9 @@ public class RadialMenu : MonoBehaviour {
 				}
 
 				if ((Input.GetMouseButtonUp(0) && !usingGamepad) || (GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One) && usingGamepad)) {
-					foreach (GameObject menuItem in playerMenuItems) {
+					for (int i = 0; i < playerMenuItems.Length; i++)
+					{
+						GameObject menuItem = playerMenuItems[i];
 						SpriteRenderer spriteRenderer = menuItem.GetComponent<SpriteRenderer>();
 						if (IsMouseOverObject(menuItem) || (GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One) && spriteRenderer.color.a > 0.999)) {
 							menuItem.renderer.enabled = true;
@@ -116,6 +116,7 @@ public class RadialMenu : MonoBehaviour {
 							menuItem.transform.position = newPos;
 							inStageTwo = true;
 							selectedPlayerObject = menuItem;
+							selectedPlayerIndex = i;
 						} else {
 							menuItem.renderer.enabled = false;
 						}
@@ -177,10 +178,7 @@ public class RadialMenu : MonoBehaviour {
 								releasedAfterGamepadSelect = false;
 							}
 
-							CommandPair command = new CommandPair();
-							command.character = null;
-							command.task = (Task)i;
-							BroadcastMessage("IssueCommand", command);
+							IssueCommand((Task)i);
 
 						} else {
 							menuItem.renderer.enabled = false;
@@ -240,8 +238,9 @@ public class RadialMenu : MonoBehaviour {
 		selectedPlayerObject = null;
 	}
 
-	// For debugging purposes
-	void IssueCommand (CommandPair command) {
-		print (command.task);
+	void IssueCommand (Task task) {
+		GameObject npc = GameObject.Find(NPC_NAMES[selectedPlayerIndex]);
+		NonPlayer npcComponent = npc.GetComponent<NonPlayer> ();
+		npcComponent.pathfinder.currentTask = task;
 	}
 }

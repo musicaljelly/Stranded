@@ -24,6 +24,5 @@ namespace StrandedConstants
 		COOK_FOOD,
 		EAT_FOOD
 	}
-
 }
 

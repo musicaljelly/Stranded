@@ -15,7 +15,7 @@ public class NonPlayer : MonoBehaviour {
 
 
 	// Pathfinding
-	Pathfinder pathfinder;
+	public Pathfinder pathfinder;
 
 	// Use this for initialization
 	void Start () {
@@ -56,9 +56,9 @@ public class NonPlayer : MonoBehaviour {
 				break;
 		}
 
-		if (Input.GetMouseButton (0)) 
+		if (Input.GetMouseButton (0) && !RadialMenu.isActive) 
 		{
-			Debug.Log("Got some mouse action");
+			//Debug.Log("Got some mouse action");
 			pathfinder.currentTask = Task.COOK_FOOD;
 			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			pathfinder.setCurrentTaskCoordinates(mousePosition);

@@ -9,7 +9,7 @@ public class RadialMenu : MonoBehaviour {
 
 	float BUTTON_RADIUS = 1.25f;
 
-	string[] NPC_NAMES = {"nonplayer1", "nonplayer2", "nonplayer3"};
+	string[] NPC_NAMES = {"Walt", "Claire", "Vincent"};
 	Task[] TASK_ORDER = {Task.IDLE, Task.SCAVENGE_FOOD, Task.SCAVENGE_WOOD, Task.UPGRADE_SHELTER, Task.START_FIRE, Task.SCAVENGE_PALMS};
 
 	public static bool isActive = false;
@@ -24,7 +24,8 @@ public class RadialMenu : MonoBehaviour {
 	GameObject selectedPlayerObject = null;
 	int selectedPlayerIndex = 0;
 
-	float radius = 3f;
+	float PLAYER_MENU_RADIUS = 2.3f;
+	float COMMAND_MENU_RADIUS = 3f;
 
 	List<GameObject> playerMenuItems = new List<GameObject>();
 	List<GameObject> commandMenuItems = new List<GameObject>();
@@ -109,7 +110,7 @@ public class RadialMenu : MonoBehaviour {
 					float angleDifference = angleSize * i;
 					Vector3 vect = Quaternion.AngleAxis(angleDifference, Vector3.forward) * Vector3.up;
 					vect.Normalize();
-					vect *= radius;
+					vect *= PLAYER_MENU_RADIUS;
 
 					Vector3 newPos = transform.position + vect;
 					newPos.z = item.transform.position.z;
@@ -130,7 +131,7 @@ public class RadialMenu : MonoBehaviour {
 					{
 						GameObject menuItem = playerMenuItems[i];
 						SpriteRenderer spriteRenderer = menuItem.GetComponent<SpriteRenderer>();
-						if (IsMouseOverObject(menuItem) || (GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One) && spriteRenderer.color.a > 0.999)) {
+						if ((!usingGamepad && IsMouseOverObject(menuItem)) || (usingGamepad && GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One) && spriteRenderer.color.a > 0.999)) {
 							menuItem.renderer.enabled = true;
 							Vector3 newPos = Camera.main.transform.position;
 							newPos.z = menuItem.transform.position.z;
@@ -156,7 +157,7 @@ public class RadialMenu : MonoBehaviour {
 					float angleDifference = angleSize * i;
 					Vector3 vect = Quaternion.AngleAxis(angleDifference, Vector3.forward) * Vector3.up;
 					vect.Normalize();
-					vect *= radius;
+					vect *= COMMAND_MENU_RADIUS;
 
 					Vector3 newPos = transform.position + vect;
 					newPos.z = item.transform.position.z;
@@ -178,7 +179,7 @@ public class RadialMenu : MonoBehaviour {
 					for (int i = 0; i < commandMenuItems.Count; i++) {
 						GameObject menuItem = commandMenuItems[i];
 						SpriteRenderer spriteRenderer = menuItem.GetComponent<SpriteRenderer>();
-						if (IsMouseOverObject(menuItem) || (GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One) && spriteRenderer.color.a > 0.999)) {
+						if ((!usingGamepad && IsMouseOverObject(menuItem)) || (usingGamepad && GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One) && spriteRenderer.color.a > 0.999)) {
 							menuItem.renderer.enabled = true;
 							Vector3 newPos = Camera.main.transform.position;
 							newPos.z = menuItem.transform.position.z;

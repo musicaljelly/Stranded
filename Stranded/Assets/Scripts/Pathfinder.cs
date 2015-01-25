@@ -37,6 +37,11 @@ public class Pathfinder {
 	}
 	public Vector3 findNextTranslation()
 	{
+		Animator animator = characterObject.GetComponentInChildren<Animator>();
+		if (animator != null) {
+			animator.SetBool("walk", false);
+		}
+
 		if (currentTask == Task.IDLE)
 		{
 			return new Vector3(0,0,0);
@@ -54,6 +59,10 @@ public class Pathfinder {
 		}
 		else
 		{
+			if (animator != null) {
+				animator.SetBool("walk", true);
+			}
+
 			float delta_x = currentTaskCoordinates.x - characterObject.transform.position.x; 
 			float delta_y = currentTaskCoordinates.y - characterObject.transform.position.y;
 

@@ -6,7 +6,7 @@ using System.Collections;
 
 /* Let's implement the survival basics before we
    get into weapon-making and animal hunting */
-enum Task
+public enum Task
 {
 	IDLE,
 	RELAX,

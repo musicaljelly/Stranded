@@ -97,7 +97,7 @@ public class RadialMenu : MonoBehaviour {
 
 					SpriteRenderer spriteRenderer = item.GetComponent<SpriteRenderer>();
 					Color color = spriteRenderer.color;
-					color.a = 0.75f;
+					color.a = 0.7f;
 					if ((IsMouseOverObject(item) && !usingGamepad) || (IsControllerPointingAtObject(angleDifference, angleSize)) && usingGamepad) {
 						color.a = 1;
 					}
@@ -144,7 +144,7 @@ public class RadialMenu : MonoBehaviour {
 
 					SpriteRenderer spriteRenderer = item.GetComponent<SpriteRenderer>();
 					Color color = spriteRenderer.color;
-					color.a = 0.75f;
+					color.a = 0.7f;
 					if ((IsMouseOverObject(item) && !usingGamepad) || (IsControllerPointingAtObject(angleDifference, angleSize)) && usingGamepad) {
 						color.a = 1;
 					}

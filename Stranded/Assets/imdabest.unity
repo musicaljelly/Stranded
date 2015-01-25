@@ -588,6 +588,7 @@ GameObject:
   - 114: {fileID: 230070906}
   - 114: {fileID: 230070905}
   - 61: {fileID: 230070904}
+  - 114: {fileID: 230070910}
   m_Layer: 0
   m_Name: nonplayer1
   m_TagString: NPC
@@ -679,6 +680,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &230070910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 230070903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf42a207137ce0a4a9772f4f9cd8929a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &290535993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2271,6 +2283,7 @@ GameObject:
   - 114: {fileID: 1315256762}
   - 114: {fileID: 1315256761}
   - 61: {fileID: 1315256760}
+  - 114: {fileID: 1315256766}
   m_Layer: 0
   m_Name: nonplayer4
   m_TagString: NPC
@@ -2362,6 +2375,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+--- !u!114 &1315256766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1315256759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf42a207137ce0a4a9772f4f9cd8929a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1336157961
 GameObject:
   m_ObjectHideFlags: 0
@@ -2750,6 +2774,7 @@ GameObject:
   - 114: {fileID: 1588579978}
   - 114: {fileID: 1588579977}
   - 61: {fileID: 1588579976}
+  - 114: {fileID: 1588579982}
   m_Layer: 0
   m_Name: nonplayer2
   m_TagString: NPC
@@ -2841,6 +2866,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &1588579982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1588579975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf42a207137ce0a4a9772f4f9cd8929a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1611882143
 Prefab:
   m_ObjectHideFlags: 0
@@ -3268,6 +3304,7 @@ GameObject:
   - 114: {fileID: 2007745982}
   - 114: {fileID: 2007745981}
   - 61: {fileID: 2007745980}
+  - 114: {fileID: 2007745986}
   m_Layer: 0
   m_Name: nonplayer3
   m_TagString: NPC
@@ -3359,6 +3396,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!114 &2007745986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2007745979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf42a207137ce0a4a9772f4f9cd8929a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2020646923
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class NonPlayer : MonoBehaviour {
 	public float startingSpeed = 0.5f;
 
 	// Attributes/Moods
-
+    Personality personality;
 
 	// Pathfinding
 	public Pathfinder pathfinder;
@@ -31,7 +31,6 @@ public class NonPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		// Update attributes/mood
 
 		// Graphics and Movement/Pathfinding
@@ -116,26 +115,8 @@ public class NonPlayer : MonoBehaviour {
 		}
 	}
 
-	void CheckValidTasks(bool freeWill = false)
-	{
-		//if campfire intensity > 0
-		//Add RELAX_SIT to ValidTasks list
-		
-		//if palms > 0
-		//Add RELAX_PALMFAN to ValidTasks list
-		
-		//Add SCAVENGE_FOOD, SCAVENGE_WOOD, & SCAVENGE_PALMS to ValidTasks list
-		
-		//if campfire intensity == 0
-		//Add START_FIRE to list
-		
-		//if campfire intensity > 0 && < 3
-		//Add STOKE_FIRE to list
-		
-		//if food > 0
-		//Add EAT_FOOD to list
-		
-		
-		//if 
-	}
+    public Task GetCurrentTask()
+    {
+        return this.pathfinder.currentTask;
+    }
 }

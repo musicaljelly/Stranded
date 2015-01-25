@@ -48,11 +48,11 @@ TagManager:
     userID: 3
     uniqueID: 188215549
     locked: 0
-  - name: Radial Menu
-    userID: 1
-    uniqueID: 1501370003
-    locked: 0
   - name: Night Cover
     userID: 2
     uniqueID: 37354883
+    locked: 0
+  - name: Radial Menu
+    userID: 1
+    uniqueID: 1501370003
     locked: 0

@@ -9,7 +9,7 @@ public class Camp : MonoBehaviour {
     float campfireTime = 20f; // time in seconds
     float campfireStartCounter = 0f;
     float campfireStartTime = 20f; // time in seconds
-    int campfireLv = 0;
+    int campfireLv = 3;
     int shelterLv = 0;
     int foodStock = 0;
     int woodStock = 2;
@@ -17,10 +17,18 @@ public class Camp : MonoBehaviour {
 
     bool shelterUpgrading = false;
     bool campfireStarting = false;
+
+	GameObject fire1 = null;
+	GameObject fire2 = null;
+	GameObject fire3 = null;
     
     // Use this for initialization
 	void Start () {
-	
+		fire1 = GameObject.Find("Fire1");
+		fire2 = GameObject.Find("Fire2");
+		fire3 = GameObject.Find("Fire3");
+
+		SetFireLevel(campfireLv);
 	}
 	
 	// Update is called once per frame
@@ -38,6 +46,7 @@ public class Camp : MonoBehaviour {
             {
                 campfireCounter = 0f;
                 campfireLv--;
+				SetFireLevel(campfireLv);
             }
         }
     }
@@ -49,17 +58,18 @@ public class Camp : MonoBehaviour {
             campfireStarting = true;
         }
 
-        if (campfireStarting == true)
+        if (campfireStarting)
         {
             if (campfireStartCounter < campfireStartTime)
             {
-                campfireStartCounter += 1 * Time.deltaTime;
+                campfireStartCounter += Time.deltaTime;
             }
             else
             {
                 campfireStartCounter = 0;
                 campfireStarting = false;
                 campfireLv++;
+				SetFireLevel(campfireLv);
             }
         }
     }
@@ -80,6 +90,7 @@ public class Camp : MonoBehaviour {
         {
             woodStock--;
             campfireLv++;
+			SetFireLevel(campfireLv);
         }
     }
     public bool IsValidSTOKECAMPFIRE()
@@ -128,4 +139,18 @@ public class Camp : MonoBehaviour {
             return false;
         }
     }
+
+	void SetFireLevel(int level) {
+		fire1.renderer.enabled = false;
+		fire2.renderer.enabled = false;
+		fire3.renderer.enabled = false;
+
+		if (level == 1) {
+			fire1.renderer.enabled = true;
+		} else if (level == 2) {
+			fire2.renderer.enabled = true;
+		} else if (level == 3) {
+			fire3.renderer.enabled = true;
+		}
+	}
 }

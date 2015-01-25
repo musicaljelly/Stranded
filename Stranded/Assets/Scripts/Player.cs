@@ -11,13 +11,13 @@ public class Player : MonoBehaviour {
 	public List<GameObject> obstacles = new List<GameObject>();
 
 	GameObject background = null;
-	GameObject camera = null;
+	GameObject cam = null;
 
 
 	// Use this for initialization
 	void Start () {
 		background = GameObject.Find ("beach");
-		camera = GameObject.Find ("Main Camera");
+		cam = GameObject.Find ("Main Camera");
 	}
 	
 	// Update is called once per frame
@@ -64,13 +64,13 @@ public class Player : MonoBehaviour {
 		}
 
 		// Update the camera. This needs to be here to eliminate stutter.
-		Vector3 oldCamPos = camera.transform.position;
+		Vector3 oldCamPos = cam.transform.position;
 		Vector3 newPos = transform.position;
-		newPos.z = camera.transform.position.z;
-		camera.transform.position = newPos;
+		newPos.z = cam.transform.position.z;
+		cam.transform.position = newPos;
 		
 		Bounds backgroundBounds = background.collider2D.bounds;
-		Bounds cameraBounds = camera.collider2D.bounds;
+		Bounds cameraBounds = cam.collider2D.bounds;
 		
 		if (cameraBounds.min.x < backgroundBounds.min.x || cameraBounds.max.x > backgroundBounds.max.x) {
 			newPos.x = oldCamPos.x;
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour {
 			newPos.y = oldCamPos.y;
 		}
 		
-		camera.transform.position = newPos;
+		cam.transform.position = newPos;
 	}
 
     // FixedUpdate is called once per fixed framerate frame

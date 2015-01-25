@@ -7,6 +7,8 @@ public class Personality : MonoBehaviour {
     int mood;
     int stress;
 
+    
+
 	// Use this for initialization
 	void Start () {
 	

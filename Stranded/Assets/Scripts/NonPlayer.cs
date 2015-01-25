@@ -60,15 +60,21 @@ public class NonPlayer : MonoBehaviour {
 
 		if (Input.GetMouseButton (0)) 
 		{
-			pathfinder.currentTask = Task.SCAVENGE_FOOD;
-			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			pathfinder.setCurrentTaskCoordinates(mousePosition);
+			pathfinder.updateTask(Task.START_FIRE);
 		}
+		else if (Input.GetMouseButton(1))
+		{
+			pathfinder.updateTask(Task.UPGRADE_SHELTER);
+		}
+		else if (Input.GetKey (KeyCode.Space))
+		{
+			pathfinder.updateTask(Task.SCAVENGE_FOOD);
+		}
+
 		this.transform.Translate (pathfinder.findNextTranslation());
 		pathfinder.updateCoordinates(transform.position);
 	}
-
-
+	
 	// Let's throw all the characters in a random place 
 	// within the camera view to begin with
 	Vector3 initializeCoordinates()
@@ -104,6 +110,14 @@ public class NonPlayer : MonoBehaviour {
 		//	coordinatesGood = isInitializeCoordinatesSafe(coordinates);
 		// }
 		return coordinates;
+	}
+
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "food")
+		{
+			Destroy(collision.gameObject);
+		}
 	}
 
 	void CheckValidTasks(bool freeWill = false)

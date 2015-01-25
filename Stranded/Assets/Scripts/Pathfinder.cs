@@ -6,6 +6,8 @@ using StrandedConstants;
 
 public class Pathfinder {
 
+	Vector3 NO_TASK_AVAILABLE = new Vector3(999, 999, 999);
+
 	public static List<GameObject> collisionObjects = new List<GameObject>();
 	public static bool collisionObjectsInitialized = false;
 
@@ -39,6 +41,12 @@ public class Pathfinder {
 		{
 			return new Vector3(0,0,0);
 		}
+		if (currentCoordinates == NO_TASK_AVAILABLE)
+		{
+			currentTask = Task.IDLE;
+			return new Vector3(0,0,0);
+		}
+
 		else if (isGoalReached())
 		{
 			currentTask = Task.IDLE;
@@ -82,12 +90,33 @@ public class Pathfinder {
 	public void updateTask(Task task)
 	{
 		currentTask = task;
-		findClosestCurrentTaskCoordinates ();
+
+		if ((this.currentTask != Task.IDLE)
+		    && (this.currentTask != Task.RELAX_PALMFAN)
+		    && (this.currentTask != Task.RELAX_SIT)
+		    && (this.currentTask != Task.EAT_FOOD))
+		{
+			currentTaskCoordinates = findClosestCurrentTask();
+		}
 	}
 
-	void findClosestCurrentTaskCoordinates()
+	private Vector3 findClosestCurrentTask()
 	{
+		GameObject[] listOfCurrentTasks = GameObject.FindGameObjectsWithTag(mapTaskToTag(this.currentTask));
+		Vector3 coordinates = NO_TASK_AVAILABLE;
 
+		float smallestDistance = 10000f;
+		foreach (GameObject taskObject in listOfCurrentTasks)
+		{
+			float distance = this.find2DDistance(this.currentCoordinates, taskObject.transform.position);
+			if (distance < smallestDistance)
+			{
+				smallestDistance = distance;
+				coordinates = taskObject.transform.position;
+			}
+		}
+
+		return coordinates;
 	}
 
 	bool isGoalReached()
@@ -188,5 +217,34 @@ public class Pathfinder {
 		}
 		
 	}
- 
+
+	private string mapTaskToTag(Task task)
+	{
+			switch(task)
+			{
+				case (Task.SCAVENGE_FOOD):
+					return "food";
+				case (Task.SCAVENGE_WOOD):
+					return "wood";
+				case (Task.SCAVENGE_PALMS):
+					return "palm";
+				case (Task.START_FIRE):
+					return "fire";
+				case (Task.STOKE_FIRE):
+					return "fire";
+				case (Task.UPGRADE_SHELTER):
+					return "shelter";
+			}
+		return "";
+	}
+
+	private float find2DDistance(Vector3 pointA, Vector3 pointB)
+	{
+		float A_x = pointA.x;
+		float B_x = pointB.x;
+		float A_y = pointA.y;
+		float B_y = pointB.y;
+
+		return (float) Math.Sqrt(Math.Pow((A_x-B_x), 2) + Math.Pow((A_y-B_y), 2));
+	}
 }

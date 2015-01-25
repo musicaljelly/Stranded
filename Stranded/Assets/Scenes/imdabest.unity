@@ -473,6 +473,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e87ea54eb289f7449edbc62bd47b316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &908735876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 908735878}
+  - 114: {fileID: 908735877}
+  - 131: {fileID: 908735879}
+  m_Layer: 0
+  m_Name: TimeCycle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &908735877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 908735876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b6b493212da504ea4ccd16711805e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &908735878
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 908735876}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+--- !u!131 &908735879
+GUITexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 908735876}
+  m_Enabled: 0
+  m_Texture: {fileID: 2800000, guid: b01ec2f461849a44d93d714c407ccaa8, type: 3}
+  m_Color: {r: .801470578, g: .801470578, b: .801470578, a: .53725493}
+  m_PixelInset:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
 --- !u!1 &1001690921
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +595,6 @@ GameObject:
   - 124: {fileID: 1027422837}
   - 81: {fileID: 1027422836}
   - 61: {fileID: 1027422842}
-  - 114: {fileID: 1027422841}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -609,17 +667,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &1027422841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1027422835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a671fa8f47e2d349adc380e93f36f61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &1027422842
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -9,7 +9,8 @@ public class RadialMenu : MonoBehaviour {
 
 	float BUTTON_RADIUS = 1.25f;
 
-	string[] NPC_NAMES = {"nonplayer1", "nonplayer2", "nonplayer3", "nonplayer4"};
+	string[] NPC_NAMES = {"nonplayer1", "nonplayer2", "nonplayer3"};
+	Task[] TASK_ORDER = {Task.IDLE, Task.SCAVENGE_FOOD, Task.SCAVENGE_WOOD, Task.UPGRADE_SHELTER, Task.START_FIRE, Task.SCAVENGE_PALMS};
 
 	public static bool isActive = false;
 	bool inStageTwo = false;
@@ -25,13 +26,33 @@ public class RadialMenu : MonoBehaviour {
 
 	float radius = 3f;
 
-	GameObject[] playerMenuItems = null;
-	GameObject[] commandMenuItems = null;
+	List<GameObject> playerMenuItems = new List<GameObject>();
+	List<GameObject> commandMenuItems = new List<GameObject>();
+
+	string PLAYER_MENU_ITEM_NAME = "uibubble";
+	string COMMAND_MENU_ITEM_NAME = "commanduibubble";
 
 	// Use this for initialization
 	void Start () {
-		playerMenuItems = GameObject.FindGameObjectsWithTag ("PlayerMenuItem");
-		commandMenuItems = GameObject.FindGameObjectsWithTag ("CommandMenuItem");
+		GameObject[] unorderedPlayerMenuItems = GameObject.FindGameObjectsWithTag ("PlayerMenuItem");
+		for (int i = 0; i < unorderedPlayerMenuItems.Length; i++) {
+			foreach (GameObject item in unorderedPlayerMenuItems) {
+				if (item.name == PLAYER_MENU_ITEM_NAME + (i + 1).ToString()) {
+					playerMenuItems.Add(item);
+					break;
+				}
+			}
+		}
+
+		GameObject[] unorderedCommandMenuItems = GameObject.FindGameObjectsWithTag ("CommandMenuItem");
+		for (int i = 0; i < unorderedCommandMenuItems.Length; i++) {
+			foreach (GameObject item in unorderedCommandMenuItems) {
+				if (item.name == COMMAND_MENU_ITEM_NAME + (i + 1).ToString()) {
+					commandMenuItems.Add(item);
+					break;
+				}
+			}
+		}
 	}
 	
 	// Update is called once per frame
@@ -80,9 +101,9 @@ public class RadialMenu : MonoBehaviour {
 				spriteRenderer.color = newColor;
 
 			} else if (!inStageTwo) {
-				float angleSize = 360.0f / (float)playerMenuItems.Length;
+				float angleSize = 360.0f / (float)playerMenuItems.Count;
 
-				for (int i = 0; i < playerMenuItems.Length; i++) {
+				for (int i = 0; i < playerMenuItems.Count; i++) {
 					GameObject item = playerMenuItems[i];
 
 					float angleDifference = angleSize * i;
@@ -105,7 +126,7 @@ public class RadialMenu : MonoBehaviour {
 				}
 
 				if ((Input.GetMouseButtonUp(0) && !usingGamepad) || (GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One) && usingGamepad)) {
-					for (int i = 0; i < playerMenuItems.Length; i++)
+					for (int i = 0; i < playerMenuItems.Count; i++)
 					{
 						GameObject menuItem = playerMenuItems[i];
 						SpriteRenderer spriteRenderer = menuItem.GetComponent<SpriteRenderer>();
@@ -128,10 +149,10 @@ public class RadialMenu : MonoBehaviour {
 					}
 				}
 			} else {
-				for (int i = 0; i < commandMenuItems.Length; i++) {
+				for (int i = 0; i < commandMenuItems.Count; i++) {
 					GameObject item = commandMenuItems[i];
 
-					float angleSize = 360.0f / (float)commandMenuItems.Length;
+					float angleSize = 360.0f / (float)commandMenuItems.Count;
 					float angleDifference = angleSize * i;
 					Vector3 vect = Quaternion.AngleAxis(angleDifference, Vector3.forward) * Vector3.up;
 					vect.Normalize();
@@ -154,7 +175,7 @@ public class RadialMenu : MonoBehaviour {
 				}
 
 				if ((Input.GetMouseButtonUp(0) && !usingGamepad) || (GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One) && usingGamepad)) {
-					for (int i = 0; i < commandMenuItems.Length; i++) {
+					for (int i = 0; i < commandMenuItems.Count; i++) {
 						GameObject menuItem = commandMenuItems[i];
 						SpriteRenderer spriteRenderer = menuItem.GetComponent<SpriteRenderer>();
 						if (IsMouseOverObject(menuItem) || (GamePad.GetButtonDown (GamePad.Button.A, GamePad.Index.One) && spriteRenderer.color.a > 0.999)) {
@@ -178,7 +199,7 @@ public class RadialMenu : MonoBehaviour {
 								releasedAfterGamepadSelect = false;
 							}
 
-							IssueCommand((Task)i);
+							IssueCommand((Task)TASK_ORDER[i]);
 
 						} else {
 							menuItem.renderer.enabled = false;
@@ -241,6 +262,6 @@ public class RadialMenu : MonoBehaviour {
 	void IssueCommand (Task task) {
 		GameObject npc = GameObject.Find(NPC_NAMES[selectedPlayerIndex]);
 		NonPlayer npcComponent = npc.GetComponent<NonPlayer> ();
-		npcComponent.pathfinder.currentTask = task;
+		npcComponent.pathfinder.updateTask(task);
 	}
 }

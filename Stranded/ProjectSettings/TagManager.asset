@@ -3,6 +3,9 @@
 --- !u!78 &1
 TagManager:
   tags:
+  - CommandMenuItem
+  - 
+  - PlayerMenuItem
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -40,4 +43,8 @@ TagManager:
   - name: Default
     userID: 0
     uniqueID: 0
+    locked: 0
+  - name: Radial Menu
+    userID: 1
+    uniqueID: 1501370003
     locked: 0

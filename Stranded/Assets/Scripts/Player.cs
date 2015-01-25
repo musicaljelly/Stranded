@@ -24,16 +24,14 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		animator.SetBool ("walk", true);
+
 		if (Input.GetAxis ("TriggersR_0") < 0.5) {
 
 			Vector2 gamepadMotion = GamePad.GetAxis (GamePad.Axis.LeftStick, GamePad.Index.One);
 			Vector2 motion = new Vector2();
 
-			animator.SetBool ("walk", true);
-
 			if (Mathf.Abs(gamepadMotion.x) < 0.01 && Mathf.Abs (gamepadMotion.y) < 0.01) {
-
-				bool noY = false;
 
 				if (Input.GetKey (KeyCode.W))
 				{
@@ -45,7 +43,6 @@ public class Player : MonoBehaviour {
 				}
 				else
 				{
-					noY = true;
 					motion = new Vector2(motion.x, 0);
 				}
 				
@@ -60,9 +57,10 @@ public class Player : MonoBehaviour {
 				else
 				{
 					motion = new Vector2(0, motion.y);
-					if (noY) {
-						animator.SetBool("walk", false);
-					}
+				}
+
+				if (!Input.GetKey (KeyCode.W) && !Input.GetKey (KeyCode.S) && !Input.GetKey (KeyCode.A) && !Input.GetKey (KeyCode.D)) {
+					animator.SetBool ("walk", false);
 				}
 
 			} else {

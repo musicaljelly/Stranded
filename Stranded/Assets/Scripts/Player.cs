@@ -24,30 +24,39 @@ public class Player : MonoBehaviour {
 
 		if (Input.GetAxis ("TriggersR_0") < 0.5) {
 
-			if (Input.GetKey (KeyCode.W) || GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.One) == new Vector2(0,1))
-			{
-				motion = new Vector2(motion.x, 1);
-			}
-			else if (Input.GetKey (KeyCode.S) || GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.One) == new Vector2(0, -1))
-			{
-				motion = new Vector2(motion.x, -1);
-			}
-			else
-			{
-				motion = new Vector2(motion.x, 0);
-			}
-			
-			if (Input.GetKey (KeyCode.A) || GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.One) == new Vector2(-1, 0))
-			{
-				motion = new Vector2(-1, motion.y);
-			}
-			else if (Input.GetKey (KeyCode.D) || GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.One) == new Vector2(1, 0))
-			{
-				motion = new Vector2(1, motion.y);
-			}
-			else
-			{
-				motion = new Vector2(0, motion.y);
+			Vector2 gamepadMotion = GamePad.GetAxis (GamePad.Axis.LeftStick, GamePad.Index.One);
+			Vector2 motion = new Vector2();
+
+			if (Mathf.Abs(gamepadMotion.x) < 0.01 && Mathf.Abs (gamepadMotion.y) < 0.01) {
+
+				if (Input.GetKey (KeyCode.W))
+				{
+					motion = new Vector2(motion.x, 1);
+				}
+				else if (Input.GetKey (KeyCode.S))
+				{
+					motion = new Vector2(motion.x, -1);
+				}
+				else
+				{
+					motion = new Vector2(motion.x, 0);
+				}
+				
+				if (Input.GetKey (KeyCode.A))
+				{
+					motion = new Vector2(-1, motion.y);
+				}
+				else if (Input.GetKey (KeyCode.D))
+				{
+					motion = new Vector2(1, motion.y);
+				}
+				else
+				{
+					motion = new Vector2(0, motion.y);
+				}
+
+			} else {
+				motion = gamepadMotion;
 			}
 			
 			motion.Normalize();
@@ -60,7 +69,9 @@ public class Player : MonoBehaviour {
 				Bounds playerBounds = collider2D.bounds;
 				playerBounds.center = new Vector3(playerBounds.center.x, playerBounds.center.y, 0);
 				if (playerBounds.Intersects (obstacleBounds)) {
-					transform.position = oldPos;
+					Vector3 adjustedPos = transform.position;
+					adjustedPos.y = oldPos.y;
+					transform.position = adjustedPos;
 					break;
 				}
 			}

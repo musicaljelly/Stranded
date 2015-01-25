@@ -1,44 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using StrandedConstants;
+
 /* This script represents the state for any non-player character */
 /* Any changes to coordinates, mood, task, etc should update this script */
-
-/* Let's implement the survival basics before we
-   get into weapon-making and animal hunting */
-public enum Task
-{
-	IDLE,
-	RELAX,
-	SCAVENGE_FOOD,
-	SCAVENGE_WOOD,
-	SCAVENGE_PALMS,
-	START_FIRE,
-	STOKE_FIRE,
-	COOK_FOOD,
-	EAT_FOOD
-}
 
 public class NonPlayer : MonoBehaviour {
 	
 	// Movement
-	Vector2 motion = new Vector2(0, 0);
-	float speed = 3f;
+	public float startingSpeed = 0.03f;
 
 	// Attributes/Moods
 
 
 	// Pathfinding
-	Task task;
-	Vector3 taskCoordinates;
+	public Pathfinder pathfinder;
 
 	// Use this for initialization
 	void Start () {
-		task = Task.IDLE;
-
 		Vector3 startingCoordinates = initializeCoordinates ();
 		Vector3 coordinateDifference = this.transform.position - startingCoordinates;
 		this.transform.Translate (coordinateDifference, Space.World);
+
+		
+		pathfinder = new Pathfinder (Task.IDLE, startingSpeed, renderer.bounds.size,
+		                             this.transform.position);
 	}
 	
 	// Update is called once per frame
@@ -47,7 +34,7 @@ public class NonPlayer : MonoBehaviour {
 		// Update attributes/mood
 
 		// Graphics and Movement/Pathfinding
-		switch(task)
+		switch(pathfinder.currentTask)
 		{
 			case (Task.IDLE):
 				break;
@@ -68,14 +55,23 @@ public class NonPlayer : MonoBehaviour {
 			case (Task.EAT_FOOD):
 				break;
 		}
-	
+
+		if (Input.GetMouseButton (0) && !RadialMenu.isActive) 
+		{
+			//Debug.Log("Got some mouse action");
+			pathfinder.currentTask = Task.COOK_FOOD;
+			Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			pathfinder.setCurrentTaskCoordinates(mousePosition);
+		}
+		this.transform.Translate (pathfinder.findNextTranslation());
+		pathfinder.updateCoordinates(transform.position);
 	}
 
 
 	// Let's throw all the characters in a random place 
 	// within the camera view to begin with
 	Vector3 initializeCoordinates()
-	{
+	{ 
 		Camera mainCamera = GameObject.Find ("Main Camera").camera;
 		Vector3 cameraCoordinates = mainCamera.gameObject.transform.position;
 		float cameraHeight = mainCamera.orthographicSize;
@@ -93,9 +89,9 @@ public class NonPlayer : MonoBehaviour {
 			ymirror = -1;
 		}
 
-		float x_coor = (Random.value * cameraWidth * xmirror) + cameraCoordinates.x;
-		float y_coor = (Random.value * cameraHeight * ymirror) + cameraCoordinates.y;
-		Vector3 coordinates = new Vector3 (x_coor, y_coor, 0);
+		float xcoor = (Random.value * cameraWidth * xmirror) + cameraCoordinates.x;
+		float ycoor = (Random.value * cameraHeight * ymirror) + cameraCoordinates.y;
+		Vector3 coordinates = new Vector3 (xcoor, ycoor, 0);
 
 		/* Implement this later if we have time; for the time
 		 * being we can deal with the bug of initializing a character

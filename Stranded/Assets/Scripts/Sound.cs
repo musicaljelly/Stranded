@@ -13,7 +13,7 @@ public class Sound : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GlobalSounds();
+        //GlobalSounds();
 	}
 
     public void PlaySound(int clip)

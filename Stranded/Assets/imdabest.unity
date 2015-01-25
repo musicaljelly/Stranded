@@ -987,7 +987,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fbc16e3382aef9e459bf1faa1b8d57fc, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: .843137264}
 --- !u!4 &558447832
 Transform:
   m_ObjectHideFlags: 0
@@ -1171,7 +1171,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 29a6708ba36d51e4eb7033c975920261, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: .843137264}
 --- !u!4 &587362365
 Transform:
   m_ObjectHideFlags: 0
@@ -1457,8 +1457,8 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: 4.41792679, y: 2.54573202}
-  m_Center: {x: .384469241, y: -1.28713381}
+  m_Size: {x: 4.72942448, y: 3.55000353}
+  m_Center: {x: .00883935485, y: -.125356704}
 --- !u!114 &966990318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2907,7 +2907,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c1bdec38a93873f4daa3de31ab2f3cc4, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: .843137264}
 --- !u!4 &1977058152
 Transform:
   m_ObjectHideFlags: 0

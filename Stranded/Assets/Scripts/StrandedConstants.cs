@@ -14,16 +14,16 @@ namespace StrandedConstants
    get into weapon-making and animal hunting */
 	public enum Task
 	{
-		IDLE,
-		RELAX,
-		SCAVENGE_FOOD,
-		SCAVENGE_WOOD,
-		SCAVENGE_PALMS,
-		START_FIRE,
-		STOKE_FIRE,
-		COOK_FOOD,
-		EAT_FOOD
+        IDLE,
+        RELAX_SIT,
+        RELAX_PALMFAN,
+        SCAVENGE_FOOD,
+        SCAVENGE_WOOD,
+        SCAVENGE_PALMS,
+        START_FIRE,
+        STOKE_FIRE,
+        UPGRADE_SHELTER,
+        EAT_FOOD
 	}
-
 }
 
